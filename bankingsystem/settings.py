@@ -6,6 +6,8 @@ from django.contrib.messages import constants as messages
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import django_heroku
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,13 +39,16 @@ INSTALLED_APPS = [
     'transactions',
     'giftweb',
     'django.contrib.humanize',
+    "corsheaders",
+    'storages',
+
 ]
 
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
+    "corsheaders.middleware.CorsMiddleware",
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -136,13 +141,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", "static")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+django_heroku.settings(locals())
 
 
 
