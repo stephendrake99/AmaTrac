@@ -1,0 +1,195 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Summary {{ block.super }} {% endblock title %}
+
+{% block content %}
+  {% include "core/messages.html" %}
+{% load static %}
+
+        <div class="page-wrapper">
+            <div class="content">
+
+                <div class="page-header">
+                    <div class="page-title">
+                        <h4>Transaction Summary</h4>
+                        <h6>You can Download the PDF file of Your Transaction Activities</h6>
+                    </div>
+                    <a  href="{% url 'transactions:history_pdf_export' %}?export=pdf" class="btn btn-added"><img src="{% static 'assets/img/icons/plus.svg' %}" alt="img" class="me-1">Export Request</a>
+                </div>
+
+
+
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-top">
+                            <div class="search-set">
+                                <div class="search-path">
+                                    <a class="btn btn-filter" id="filter_search">
+                                    <img src="{% static 'assets/img/icons/filter.svg' %}" alt="img">
+                                    <span><img src="{% static 'assets/img/icons/closes.svg' %}" alt="img"></span>
+                                    </a>
+                                </div>
+                                <div class="search-input">
+                                    <a class="btn btn-searchset"><img src="{% static 'assets/img/icons/search-white.svg' %}" alt="img"></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="table-responsive">
+                            <table class="table  datanew">
+                                <thead>
+              <tr>
+                <th>Ref</th>
+                <th>Type</th>
+                <th>Scope</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for deposit in crypto_history reversed %}
+                <tr>
+                  <td>{{ deposit.pk }}{{ user.account_no }}{{ deposit.pk }}</td>
+                  <td>{{ deposit.payment_method }}</td>
+                  <td>Transfer</td>
+                  <td><b>{{ user.account.account_currency }}</b> {{ deposit.amount }}</td>
+                  <td>{{ deposit.date }}</td>
+                  <td>{{ deposit.payment_method }}</td>
+                  <td><strong class='text-success'>{{ deposit.status }}</strong></td>
+                </tr>
+              {% endfor %}
+
+              {% for deposit in payment_history_transaction reversed %}
+                <tr>
+                  <td>{{ deposit.pk }}{{ user.account_no }}{{ deposit.pk }}</td>
+                  <td>{{ deposit.payment_method }}</td>
+                  <td>Transfer</td>
+                  <td><b>$ {{ deposit.amount }}</td>
+                  <td>{{ deposit.date }}</td>
+                  <td>{{ deposit.payment_method }}</td>
+                  <td><strong class='text-success'>{% if deposit.completed %}
+                                            <span style="color:darkgreen;" class="status-completed"><i class="fas fa-check-circle"></i> Completed</span>
+                                            {% else %}
+                                            <span style="color:orangered;" class="status-pending"><i class="fas fa-exclamation-circle"></i> Pending</span>
+                                            {% endif %}</strong></td>
+                </tr>
+              {% endfor %}
+
+              {% for withdrawal in payment_history_giftweb reversed %}
+                <tr>
+                  <td>{{ withdrawal.payment_id }}</td>
+                  <td>{{ withdrawal.gift_card_type|title }} Card</td>
+                  <td>Transfer</td>
+                  <td><b></b>$ {{ withdrawal.amount }}</td>
+                  <td>{{ withdrawal.date }}</td>
+                  <td>{{ withdrawal.product }}</td>
+                  <td><strong class='text-success'>{% if withdrawal.completed %}
+                                            <span style="color:darkgreen;" class="status-completed"><i class="fas fa-check-circle"></i> Completed</span>
+                                            {% else %}
+                                            <span style="color:orangered;" class="status-pending"><i class="fas fa-exclamation-circle"></i> Pending</span>
+                                            {% endif %}</strong></td>
+                </tr>
+              {% endfor %}
+
+              {% for payment in pay_bills reversed %}
+                <tr>
+                  <td>{{ payment.pk }}{{ user.account_no }}{{ payment.pk }}</td>
+                  <td>Pay Bill</td>
+                  <td>{{ payment.delivery_method }}</td>
+                  <td><b>{{ user.account.account_currency }}</b> {{ payment.amount }}</td>
+                  <td>{{ payment.day }}/{{ payment.month }}/{{ payment.year }}</td>
+                  <td>{{ payment.nickname }}</td>
+                  <td><strong class='text-success'>{{ payment.status }}</strong></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          <</table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  <style>
+    /* Add your CSS styles here */
+    .nk-content {
+      padding: 20px;
+    }
+
+    .nk-block {
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      background-color: #007BFF;
+      color: #fff;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    iframe {
+      margin-top: 20px;
+    }
+
+    .card-preview {
+      margin-top: 20px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      margin-bottom: 0;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+
+    .text-success {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    /* Media Query for Smaller Screens */
+    @media screen and (max-width: 768px) {
+      .nk-block {
+        padding: 10px;
+      }
+
+      .btn-primary {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+{% endblock content %}
