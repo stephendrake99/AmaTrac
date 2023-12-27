@@ -1,0 +1,83 @@
+
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Get the form and email input element
+        const emailForm = document.getElementById("emailForm");
+        const emailInput = document.getElementById("email");
+
+        // Listen for form submission
+        emailForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const email = emailInput.value;
+
+            // Validate email
+            if (validateEmail(email)) {
+                try {
+                    // Send email
+                    await sendEmail(email);
+                    showAlert("Email sent successfully!", "success");
+                    emailForm.reset(); // Clear the form after successful submission
+                } catch (error) {
+                    showAlert("Failed to send email. Please try again later.", "error");
+                }
+            } else {
+                showAlert("Please enter a valid email address.", "error");
+            }
+        });
+
+        // Validate email using a regular expression
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Send email using Email.send
+        async function sendEmail(email) {
+            const subject = "New Email Subscriber";
+            const body = `A new email subscriber: ${email}`;
+
+            return await Email.send({
+                SecureToken: "f395f5a2-fc81-44cb-bb82-ae36e97677ef",
+                To: "trackchi8@gmail.com",
+                From: "support@amazontracks.online",
+                Subject: subject,
+                Body: body
+            });
+        }
+
+        // Display alert messages
+        function showAlert(message, type) {
+            const alertDiv = document.createElement("div");
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            const formWrap = document.getElementById("emailForm"); // Use the form element to append the alert
+            formWrap.appendChild(alertDiv);
+
+            // Remove alert after 3 seconds
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // $(".owl-carousel").owlCarousel();
+    $("#owl-demo").owlCarousel({
+
+    autoPlay: 2000, //Set AutoPlay to 3 seconds
+    // //Autoplay
+    // autoPlay : true,
+    // goToFirst : true,
+    // goToFirstSpeed : 1000,
+
+   
+    items : 3,
+    itemsDesktop : [1199,3],
+    itemsDesktopSmall : [979,3]
+
+ });
+
+});
+</script>
