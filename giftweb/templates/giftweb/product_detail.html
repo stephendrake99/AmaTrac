@@ -1,0 +1,210 @@
+
+{% extends 'core/base.html' %}
+
+
+
+{% block content %}
+{% load static %}
+    <script>
+        // Wait for the page to finish loading
+        window.addEventListener("load", function () {
+            // Find the global-loader div
+            var globalLoader = document.getElementById("global-loader");
+
+            // Display the loader for 2 seconds, then hide it
+            setTimeout(function () {
+                globalLoader.style.display = "none";
+            }, 1000); // 2000 milliseconds (2 seconds)
+        });
+    </script>
+
+        <div class="page-wrapper">
+            <div class="content">
+
+                <div class="page-header">
+                    <div class="page-title">
+                        <h4>Product Details</h4>
+                        <h6>Full details of  {{ product.name|title }}</h6>
+                    </div>
+                    <a  href="{% url 'giftweb:make_payment' model_name='product' product_id=product.id %}" class="btn btn-added"><img src="{% static 'assets/img/icons/plus.svg' %}" alt="img" class="me-1">Buy Now</a>
+                </div>
+                    <div class="page-btn">
+                        
+                    </div>
+                <div class="row">
+                    <div class="col-lg-8 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="productdetails">
+                                    <ul class="product-bar">
+                                        <li>
+                                            <h4>Name</h4>
+                                            <h6>{{ product.name|title }} </h6>
+                                        </li>
+                                        <li>
+                                            <h4>Category</h4>
+                                            <h6>{% for category in product.categories.all %}
+                                                {{ category.name }}{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}</h6>
+                                        </li>
+                                        <li>
+                                            <h4>Sub Category</h4>
+                                            <h6>{{ product.sub_category }}</h6>
+                                        </li>
+                                        <li>
+                                            <h4>Brand</h4>
+                                            <h6>{{ product.brand }}</h6>
+                                        </li>
+                                        <li>
+                                            <h4>Current location</h4>
+                                            <h6>{{ product.current_location }}</h6>
+                                        </li>
+                                        <li>
+                                            <h4>Product ID</h4>
+                                            <h6>{{ product.tracking_id }}</h6>
+                                        </li>
+
+                                        <li>
+                                            <h4>Quantity</h4>
+                                            <h6>{{ product.quantity }}</h6>
+                                        </li>
+
+                                        <li>
+                                            <h4>Discount </h4>
+                                            <h6>{{ product.discount }}%</h6>
+                                        </li>
+                                        <li>
+                                            <h4>Price</h4>
+                                            <h6>{{ product.price }}</h6>
+                                        </li>
+                                        <li>
+                                            <h4>Status</h4>
+                                            <h6>Active</h6>
+                                        </li>
+                                        <li>
+                                            <h4>Description</h4>
+                                            <h6>{{ product.description }},</h6>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<div class="col-lg-4 col-sm-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="slider-product-details">
+                <div class="gallery-container">
+                    <div class="image-grid">
+                        <div class="user-photo">
+                            <img style="max-width: 150px; max-height: 130px;" src="{{ product.image.url }}" id="__SYS_ProfilePhoto" />
+                        </div>
+                        <div class="user-photo">
+                            <img style="max-width: 150px; max-height: 130px;" src="{{ product.image2.url }}" id="__SYS_ProfilePhoto" />
+                        </div>
+                        <div class="user-photo">
+                            <img style="max-width: 150px; max-height: 130px;" src="{{ product.image3.url }}" id="__SYS_ProfilePhoto" />
+                        </div>
+                        <div class="user-photo">
+                            <img style="max-width: 150px; max-height: 130px;" src="{{ product.image4.url }}" id="__SYS_ProfilePhoto" />
+                        </div>
+                        <div class="user-photo">
+                            <img style="max-width: 150px; max-height: 130px;" src="{{ product.image5.url }}" id="__SYS_ProfilePhoto" />
+                        </div>
+
+                        <!-- Repeat this user-photo block for additional images -->
+
+                    </div>
+                </div>
+                <button class="scroll-button scroll-left-button">&#9664; Click to Scroll</button> <!-- Scroll left button -->
+                <button class="scroll-button scroll-right-button">Click to Scroll &#9654;</button> <!-- Scroll right button -->
+            </div>
+        </div>
+
+        <style>
+            .gallery-container {
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            .image-grid {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                overflow-x: auto;
+                scroll-behavior: smooth; /* Add smooth scrolling behavior */
+            }
+
+            .user-photo {
+                margin-right: 20px;
+            }
+
+            .scroll-button {
+                background-color: rgba(255, 255, 255, 0.8);
+                padding: 5px;
+                cursor: pointer;
+                z-index: 1;
+            }
+
+            .scroll-left-button {
+                margin-right: 10px; /* Add some spacing between buttons */
+            }
+
+            .scroll-right-button {
+                margin-left: 10px; /* Add some spacing between buttons */
+            }
+        </style>
+
+        <script>
+            // image-scroll.js
+            document.addEventListener('DOMContentLoaded', function () {
+                const scrollLeftButton = document.querySelector('.scroll-left-button');
+                const scrollRightButton = document.querySelector('.scroll-right-button');
+                const imageGrid = document.querySelector('.image-grid');
+
+                scrollLeftButton.addEventListener('click', () => {
+                    imageGrid.scrollBy({
+                        left: -150, // Adjust this value to control the scroll distance
+                        behavior: 'smooth',
+                    });
+                });
+
+                scrollRightButton.addEventListener('click', () => {
+                    imageGrid.scrollBy({
+                        left: 150, // Adjust this value to control the scroll distance
+                        behavior: 'smooth',
+                    });
+                });
+            });
+
+        </script>
+    </div>
+</div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+
+    <script src="{% static 'assets/js/feather.min.js' %}"></script>
+
+    <script src="{% static 'assets/js/jquery.slimscroll.min.js' %}"></script>
+
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'assets/plugins/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+
+    <script src="{% static 'assets/js/script.js' %}"></script>
+{% endblock %}
