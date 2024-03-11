@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
-
+from cloudinary.models import CloudinaryField
 
 class User(AbstractUser):
     username = models.CharField(
@@ -198,12 +198,7 @@ class AccountDetails(models.Model):
     )
 
 
-    picture = models.ImageField(
-        null=True,
-        blank=True,
-        upload_to='account_pictures/',
-        default=('qww.png')
-    )
+    picture = CloudinaryField("image", null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
