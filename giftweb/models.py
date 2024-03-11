@@ -2,13 +2,14 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from datetime import datetime
+from cloudinary.models import CloudinaryField
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     countdown_time = models.DurationField()
-    image = models.ImageField(upload_to='product_images/')
+    image = CloudinaryField("image")
     timestamp = models.DateTimeField(auto_now_add=True)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
@@ -21,7 +22,7 @@ class PremiumProduct(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     countdown_time = models.DurationField()
-    image = models.ImageField(upload_to='product_images/')
+    image = CloudinaryField("image")
     extra_feature = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -42,7 +43,7 @@ class Payment(models.Model):
     premium_product = models.ForeignKey(PremiumProduct, on_delete=models.CASCADE, null=True, blank=True)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
 
-    proof_of_pay = models.ImageField(upload_to='photos/', null=True, blank=True)
+    proof_of_pay = CloudinaryField("image", null=True, blank=True)
     gift_card_type = models.CharField(choices=[('apple', 'Apple Card'), ('amazon', 'Amazon Card'), ('steam', 'Steam Card'), ('xbox', 'Xbox Card')], max_length=10)
     status = models.CharField(choices=STATUS_CHOICES, max_length=10, default='PENDING')
     date = models.DateTimeField(auto_now_add=True)
@@ -70,7 +71,7 @@ class CartItem(models.Model):
 
 class Blog(models.Model):
     topic = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='blog_images/')
+    image = CloudinaryField("image")
     body = RichTextField()
     date = models.DateField()
     read_more = models.CharField(max_length=255, default='GiftCard')
@@ -93,7 +94,7 @@ class Contactor(models.Model):
     
 class Video(models.Model):
     title = models.CharField(max_length=255)
-    video_file = models.FileField(upload_to='videos/')
+    video_file = CloudinaryField("image")
     description = models.TextField()
 
     def __str__(self):
