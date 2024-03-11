@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-#import django_heroku
+import django_heroku
 import dj_database_url
 import cloudinary
 import cloudinary.uploader
