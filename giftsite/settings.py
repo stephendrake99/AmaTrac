@@ -13,8 +13,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-import django_heroku
+#import django_heroku
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -175,6 +178,12 @@ AUTHENTICATION_BACKENDS = (
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+cloudinary.config( 
+  cloud_name = "djl5rhevy", 
+  api_key = "472775329791993", 
+  api_secret = "DKjvE0ikKJ0l5af9e6Q7QtD-Vr0" 
+)
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 django_heroku.settings(locals())
