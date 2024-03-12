@@ -118,7 +118,11 @@
 
                     <!-- <i class="fa-solid fa-bars open-nav"></i> -->
                 </div>
-                <small> <a href="{% url 'giftweb:profile' %}">{{ user.username }}</a> </small>
+{% if request.user.is_authenticated %}
+    <small><a href="{% url 'giftweb:profile' %}">{{ request.user.username }}</a></small>
+{% else %}
+    <small><a href="{% url 'accounts:login' %}">Log In</a></small>
+{% endif %}
             </section>
             <div class="progress"></div>
         </div>
