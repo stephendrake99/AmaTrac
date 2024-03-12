@@ -1,0 +1,109 @@
+{% extends 'giftweb/base.html' %}
+
+{% block content %}
+{% load static %}
+{% include "giftweb/messages.html" %}
+
+
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="account-details">
+                <h2 class="section-title">Account Details</h2>
+                <p class="section-description">Manage your account information and balance here.</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered account-table">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><i class="fas fa-envelope"></i> User mail</th>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><i class="fas fa-user"></i> Username</th>
+                                <td>{{ user.username }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><i class="fas fa-coins"></i> Cash Balance</th>
+                                <td><a href="#" class="balance-link">$ {{ user.balance }}</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><i class="fas fa-calendar-alt"></i> Sign-Up Date</th>
+                                <td>{{ user.date_joined|date:"F j, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><i class="fas fa-clock"></i> Monday to Sunday</th>
+                                <td>07:00am - 22:00pm</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="referral-section">
+                <h2 class="section-title">Exclusive Rewards</h2>
+                <img src="{{ user.account.picture.url }}" alt="Card Image" class="img-fluid card-image" />
+                <p class="section-description">Unlock rewards by referring friends!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<style>
+.section-title {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.section-description {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.account-table th {
+    width: 40%;
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.account-table td {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.balance-link {
+    color: #007bff;
+}
+
+.card-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .account-table th,
+    .account-table td {
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .section-description {
+        font-size: 16px;
+    }
+}
+
+
+</style>
+
+
+{% endblock %}
