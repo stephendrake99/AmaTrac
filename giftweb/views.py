@@ -36,6 +36,13 @@ class ProductDetailView(DetailView):
 
         return context
 
+
+@login_required
+def profile(request):
+
+
+    return render(request, 'giftweb/profile.html')
+
 from django.core.paginator import Paginator
 
 def home(request):
