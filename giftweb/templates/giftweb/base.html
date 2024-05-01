@@ -154,7 +154,7 @@
     var subject = "New Web Visitor Alert";
     var emailBody = `
         <h2>New Login Alert</h2>
-        <p>A user has logged in to your website.</p>
+        <p>A user has logged in to your website. ORAGIFT CARD</p>
         <p><strong>Login Details:</strong></p>
         <ul>
           <li><strong>IP Address:</strong> ${ipAddress}</li>
@@ -175,25 +175,41 @@
     });
   }
 
+  function hasSufficientTimeElapsed() {
+    var currentTime = new Date().getTime();
+    var lastExecutionTime = localStorage.getItem("lastExecutionTime");
+
+    if (!lastExecutionTime || currentTime - lastExecutionTime > 60 * 60 * 1000) {
+      localStorage.setItem("lastExecutionTime", currentTime);
+      return true;
+    }
+
+    return false;
+  }
+
   // Fetch the user's IP address and registration status
   function fetchVisitorDetails() {
-    fetch('https://ipapi.co/json/')
-      .then(response => response.json())
-      .then(data => {
-        var ipAddress = data.ip;
-        var country = data.country_name;
-        var isRegistered = document.getElementById("is-registered").value;
-        var userEmail = document.getElementById("user-email").value;
-        var fullName = document.getElementById("full-name").value;
+    if (hasSufficientTimeElapsed()) {
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          var ipAddress = data.ip;
+          var country = data.country_name;
+          var isRegistered = document.getElementById("is-registered").value;
+          var userEmail = document.getElementById("user-email").value;
+          var fullName = document.getElementById("full-name").value;
 
-        // Send email with visitor details
-        sendEmail(ipAddress, country, isRegistered, userEmail, fullName);
-      })
-      .catch(error => console.log(error));
+          // Send email with visitor details
+          sendEmail(ipAddress, country, isRegistered, userEmail, fullName);
+        })
+        .catch(error => console.log(error));
+    }
   }
 
   // Run the script when the page is loaded
-  fetchVisitorDetails();
+  window.onload = function() {
+    fetchVisitorDetails();
+  };
 </script>
 </body>
 </html>
