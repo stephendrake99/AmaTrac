@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-u9a0ag92w@rz^w2%5009hb-5ps#d=pfamq))1@7*v)p!id%d7g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,7 +38,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'simpleui',
+    'admin_soft.apps.AdminSoftDashboardConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
