@@ -42,3 +42,4 @@ wcwidth==0.2.6
 whitenoise==6.4.0
 gunicorn==20.1.0
 cloudinary
+django-simpleui==2024.4.1
